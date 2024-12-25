@@ -1,0 +1,19 @@
+/*  Basics */
+@import "basics/base.css";
+@import "basics/helpers.css";
+@import "basics/layout.css";
+@import "basics/animations.css";
+
+/* Pages */
+@import "./pages/home.css";
+
+/* Components */
+@import "./cmps/header.css";
+@import "./cmps/game-match-cards.css";
+@import "./cmps/swipe-buttons.css";
+@import "./cmps/chats.css";
+@import "./cmps/chat.css";
+@import "./cmps/chat-screen.css";
+
+
+
