@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/imgs/logo.png"
+import logo from "../assets/imgs/gameMatch-logo3.webp"
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -18,7 +18,11 @@ export function LoginPage() {
             <div className="login-page-bg-container">
                 <div className="login-page-title-container">
                     <div className="login-title-logo"><img src={logo} className='menu-logo' alt='menu'/></div>
-                    <div className="login-title-text">Game Match</div>
+                    <div className="login-title-text-container">
+                      <div className="login-title-text">Game </div>
+                      <div className="login-title-text">Match </div>
+                    </div>"
+                    
                 </div>
             </div>
             <div className="login-page-bg-container2">

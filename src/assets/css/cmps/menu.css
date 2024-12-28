@@ -36,11 +36,6 @@
     justify-content: center;
 }
 
-.menu-logo{
-    object-fit: contain;
-    height: 40px;
-}
-
 .MuiSvgIcon-root{
     background-color: black;
     fill: white !important;
