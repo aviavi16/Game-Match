@@ -1,0 +1,41 @@
+.login-page-container{
+    box-sizing: border-box;
+    border: 8px groove rgb(243, 11, 11);    
+}
+
+.login-page-bg-container{
+    background-image: linear-gradient(rgb(248, 60, 92), rgb(247, 50, 115));
+    height: 33vh;
+}
+
+.login-page-bg-container2{
+    background-image: linear-gradient(rgb(247, 50, 115), rgb(212, 46, 74));
+    height: 27vh;
+}
+
+.login-page-bg-container3{
+    background-image: linear-gradient(rgb(212, 46, 74), rgb(247, 50, 115));
+    height: 40vh;
+}
+
+.login-page-title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.login-title-text{
+    align-self: center;
+    color: white;
+    font-weight: 600;
+    font-size: 34px;
+    display: flex;
+    align-items: center;
+}
+
+.login-title-logo{
+    align-self: flex-end;
+}

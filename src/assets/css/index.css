@@ -6,10 +6,12 @@
 
 /* Pages */
 @import "./pages/home.css";
+@import "./pages/home-page.css";
+@import "./pages/login-page.css";
+
 
 /* Components */
-@import "./cmps/header.css";
-@import "./cmps/game-match-cards.css";
+@import "./cmps/menu.css";
 @import "./cmps/swipe-buttons.css";
 @import "./cmps/chat.css";
 @import "./cmps/chat-screen.css";

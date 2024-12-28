@@ -1,4 +1,8 @@
-.game-match-cards-container{
+html{
+    overflow-y: hidden;
+}
+
+.home-page-container{
     display: flex;
     justify-content: center;
     margin-top: 10vh;
@@ -10,15 +14,18 @@
     width: 600px;
     padding: 20px;
     max-width: 85vw;
-    height: 50vh;
+    height: 100%;
     box-shadow: 0px 18px 53px 0px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
-    background-size: cover;
-    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%; 
 }
 
 .swipe{
     position: absolute;
+    height: 80%;
 }
 
 .card h3{

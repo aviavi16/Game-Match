@@ -1,0 +1,80 @@
+.menu-container{
+    display: grid;
+    align-items: center;
+    z-index: 100;
+    border-bottom: 1px solid #f9f9f9;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white; 
+    grid-template-areas: "menu-icons"
+                         "menu-text"
+                         ".";
+    grid-template-rows: 0.3fr 0.2fr 0.2fr;
+    height: 70px;
+}
+
+.menu-icons-container{
+    display: grid;
+    grid-area: menu-icons;
+    height: 30px;
+    min-width: 0px;
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(max(20px, 20%),1fr ));
+    justify-content: center;
+    align-content: center;
+}
+
+.menu-text-container{
+    width: 100%;
+    display: grid;
+    grid-area: menu-text;
+    height: 30px;
+    grid-template-columns: repeat(5, minmax(max(20px, 20%),1fr ));
+    align-content: center;
+    justify-content: center;
+}
+
+.menu-logo{
+    object-fit: contain;
+    height: 40px;
+}
+
+.MuiSvgIcon-root{
+    background-color: black;
+    fill: white !important;
+    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+.chat-text, .back-text, .profile-text, .preferences-text, .likes-text, .discover-text{
+    justify-self: center;
+    font-size: 12px;
+}
+
+.MuiIconButton-label{
+    background-color: black;
+    fill: white !important;
+    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important;
+    rect{
+        fill: black !important;
+    }
+    svg{
+        background-color: black !important;
+        path{
+            fill: white !important;
+
+        }
+    }
+    img{
+        background-color: black !important;
+        width: 19px;
+        height: 19px;
+
+    }
+}
+
+.menu-icon-container{
+    padding: 0px !important;
+    padding-top: 8px !important;
+}

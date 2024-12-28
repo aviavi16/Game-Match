@@ -1,7 +1,8 @@
 .swipe-btns-container{
     position: fixed;
-    bottom: 10vh;
+    bottom: 30vh;
     display: flex;
+    display: none;
     width: 100%;
     justify-content: space-evenly;
 }
