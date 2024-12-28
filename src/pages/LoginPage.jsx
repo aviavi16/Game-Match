@@ -68,6 +68,13 @@ export function LoginPage() {
                         />
                         <ErrorMessage name="email" component="div" />
 
+                        <Field
+                            type="fullname"
+                            name="bggUser"
+                            placeholder="Enter BGG username"
+                        />
+                        <ErrorMessage name="bggUser" component="div" />
+
                         <Field type="password" name="password" />
                         <ErrorMessage name="password" component="div" />
 
