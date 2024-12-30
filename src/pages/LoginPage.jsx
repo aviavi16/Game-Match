@@ -81,7 +81,9 @@ export function LoginPage() {
         var loggedUser = await userService.login ( { 
             username,
             password,
-            bggUser
+            bggUser,
+            likedGamesArray,
+            superLikedGames
         } )
         loginUser(loggedUser)
     } catch (err) {
@@ -114,6 +116,8 @@ export function LoginPage() {
             username,
             bggUser,
             password,
+            likedGamesArray,
+            superLikedGames
         } )
         loginUser(user)
         showSuccessMsg( `Welcome ${user?.username}`)
@@ -132,6 +136,8 @@ export function LoginPage() {
           username: "guest",
           bggUser: "guest",
           password: "guest",
+          likedGamesArray: [],
+          superLikedGames: []
       } 
       loginUser(user)
       showSuccessMsg( `Welcome ${user?.username}`)
