@@ -1,15 +1,17 @@
 
-import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { Menu } from './cmps/Menu';
 import { HomePage } from './pages/HomePage';
 import { SwipeButtons } from './cmps/SwipeButtons';
 import { Chats } from './cmps/Chats';
 import { ChatScreen } from './cmps/ChatScreen';
 import { LoginPage } from './pages/LoginPage';
+import { UserMsg } from './cmps/UserMsg';
 export function App() {
 
     return (
         <section className='main-app'>
+            <UserMsg />
             <Router>
                 <Routes >
                     <Route path='/chat/:person' element={

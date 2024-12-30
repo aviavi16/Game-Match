@@ -2,94 +2,261 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/imgs/gameMatch-logo3.webp"
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
+import { loginUser, logoutUser } from "../store/user/user.actions";
+import { userService } from "../services/user.service.remote";
+import { useSelector } from "react-redux";
 
 export function LoginPage() {
-    const [isLoggedIn , setIsLoggedIn] = useState(false)
-    const navigate = useNavigate()
+  const [isSignup, setIsSignup] = useState(false)
 
-    function loginComplete(){
-        // if(isLoggedIn){
-        //     navigate('/');
-        //  }
-        navigate('/homepage');
+  const [username, setUsername] = useState('')
+  const [bggUser, setBggUser] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const [usernameError, setUsernameError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [confirmPasswordError, setConfirmPasswordError] = useState('')
+  const navigate = useNavigate()
+
+  //will be in the store in the future
+  let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
+
+  function onValidation () {
+    // Set initial error values to empty
+    setUsernameError('')
+    setPasswordError('')
+    setConfirmPasswordError('')
+
+    // Check if the user has entered both fields correctly
+    if ('' === username) {
+        setUsernameError('Please enter your username')
+        throw 'validation error'
     }
-    return (
-        <section className="login-page-container">
-            <div className="login-page-bg-container">
-                <div className="login-page-title-container">
-                    <div className="login-title-logo"><img src={logo} className='menu-logo' alt='menu'/></div>
-                    <div className="login-title-text-container">
-                      <div className="login-title-text">Game </div>
-                      <div className="login-title-text">Match </div>
-                    </div>"
-                    
-                </div>
-            </div>
-            <div className="login-page-bg-container2">
-                
-            </div>
-            <div className="login-page-bg-container3">
-                <Formik  initialValues={{ fullname: "", email: "", password: "" }}
-         validate={(values) => {
-           const errors = {};
-           if (!values.fullname) {
-             errors.fullname = "Required";
-           }
 
-           if (!values.email) {
-             errors.email = "Required";
-           } else if (
-             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-           ) {
-             errors.email = "Invalid email address";
-           }
-           if (!values.password) {
-             errors.password = "Required";
-           }
-           return errors;
-         }}
-         onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-              loginComplete()
-            }, 400);
-          }}
-        >
-                {({ isSubmitting }) => (
-                    <Form>
-                        <Field
-                            type="text"
-                            name="fullname"
-                            placeholder="Enter your fullname"
-                        />
-                        <ErrorMessage name="fullname" component="div" />
+    if (!/^[\w-\.]+/.test(username)) {
+        setUsernameError('Please enter a valid username')
+        throw 'validation error'
+    }
 
-                        <Field
-                            type="email"
-                            name="email"
-                            placeholder="Enter email address"
-                        />
-                        <ErrorMessage name="email" component="div" />
+    if ('' === password) {
+        setPasswordError('Please enter a password')
+        throw 'validation error'
+    }
 
-                        <Field
-                            type="fullname"
-                            name="bggUser"
-                            placeholder="Enter BGG username"
-                        />
-                        <ErrorMessage name="bggUser" component="div" />
+    if (password.length < 7) {
+        setPasswordError('The password must be 8 characters or longer')
+        throw 'validation error'
+    }
 
-                        <Field type="password" name="password" />
-                        <ErrorMessage name="password" component="div" />
+    if (isSignup){
+        if ('' === confirmPassword) {
+            setConfirmPasswordError('Please enter your confirm Password')
+            throw 'validation error'
+        }
 
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-                        </button>
-                    </Form>
-                    )}
-                </Formik>
-            </div>
+        if (password !== confirmPassword) {
+            setConfirmPasswordError('your confirm Password and password must be identical')
+            throw 'validation error'
+        }
+
+        if ('' === fullname) {
+            setFullnameError('Please enter your fullname')
+            throw 'validation error'
+        }
+
+    }
+  }
+
+  async function onLogin () {
+    try{
+        onValidation()
+    }catch (err){
+        console.log('validation error :', err)
+        return
+    }
+
+    try {
+        var loggedUser = await userService.login ( { 
+            username,
+            password,
+            bggUser
+        } )
+        loginUser(loggedUser)
+    } catch (err) {
+        console.log('cannot login :', err.response ? err.response.data: err)
+        showErrorMsg( 'Cannot login ')
+    } finally{
+        navigate('/homepage')
+    }
+
+  }
+
+  function onBackLogin(){
+    setIsSignup ( false )
+  }
+
+  function onSignup () {
+    setIsSignup ( true )
+  }
+
+  async function onSubmit () {
+    try{
+        onValidation()
+    }catch (err){
+        console.log('validation error :', err)
+        return
+    }
+
+    try {
+        const user = await userService.signup( { 
+            username,
+            bggUser,
+            password,
+        } )
+        loginUser(user)
+        showSuccessMsg( `Welcome ${user?.username}`)
+
+    } catch (err) {
+        console.log('cannot signup :', err)
+        showErrorMsg( 'Cannot signup ')
+    }finally{
+        navigate('/homepage')
+    }
+  } 
+
+  async function onGuest () {
+    try {
+      const user = { 
+          username: "guest",
+          bggUser: "guest",
+          password: "guest",
+      } 
+      loginUser(user)
+      showSuccessMsg( `Welcome ${user?.username}`)
+
+    } catch (err) {
+        console.log('cannot signup :', err)
+        showErrorMsg( 'Cannot signup ')
+    }finally{
+        navigate('/homepage') 
+    }
+  }
+    
+  async function onLogout () {
+    try {
+        await userService.logout()
+        logoutUser(null)
+    } catch (err) {
+        console.log('cannot logout')
+    } 
+  }
+
+  return (
+      <section className="login-page-container">
+          <div className="login-page-bg-container">
+              <div className="login-page-title-container">
+                  <div className="login-title-logo"><img src={logo} className='menu-logo' alt='menu'/></div>
+                  <div className="login-title-text-container">
+                    <div className="login-title-text">Game </div>
+                    <div className="login-title-text">Match </div>
+                  </div>"
+                  
+              </div>
+          </div>
+          <div className="login-page-bg-container2">
+              
             
-        </section>
-    )
+          </div>
+          <div className="login-page-bg-container3">
+            {!loggedinUser && 
+              <form className='form-container'>
+                  <div className={'mainContainer'}>
+                      {!isSignup && <div className={'titleContainer'}>
+                          <div>Login</div>
+                      </div>}
+
+                      {isSignup && <div className={'titleContainer'}>
+                          <div>Signup</div>
+                      </div>}
+                      <br />
+                      <div className={'username-container'}>
+                          <input
+                          value={username}
+                          placeholder="Enter your username here"
+                          onChange={(ev) => setUsername(ev.target.value)}
+                          className={'inputBox'}
+                          />
+                          <label className="errorLabel">{usernameError}</label>
+                      </div>
+                      <br />
+                      <div className={'password-container'}>
+                          <input
+                          value={password}
+                          placeholder="Enter your password here"
+                          onChange={(ev) => setPassword(ev.target.value)}
+                          className={'inputBox'}
+                          />
+                          <label className="errorLabel">{passwordError}</label>
+                      </div>
+
+                      <br />
+                      {isSignup && 
+                      <div className='signup-extra-fields'>
+
+                          <div className={'confirm-password-container'}>
+                          <input
+                              value={confirmPassword}
+                              placeholder="Enter your confirm password here"
+                              onChange={(ev) => setConfirmPassword(ev.target.value)}
+                              className={'inputBox'}
+                              required
+                              />
+                              <label className="errorLabel">{confirmPasswordError}</label>
+                          </div>
+
+                          <br/>
+                          <div className={'bggUser-container'}>
+                          <input
+                              value={bggUser}
+                              placeholder="Enter your bggUser here"
+                              onChange={(ev) => setBggUser(ev.target.value)}
+                              className={'inputBox'}
+                              required
+                              />
+                          </div>
+                      </div>
+                      }
+
+                      <br />
+                      <div className={'actions-btn'}>
+                          {!isSignup && <div className='login-btns-container'>
+                              <button className="button-19" role="button" onClick={onLogin} type="button"> Log in </button>
+                              <button className="button-19" role="button" onClick={onSignup} type="button"> Sign up </button>
+                              <button type="button" onClick={onGuest} className="button-19" role="button"> Continue as a Guest </button>
+                          </div>
+                          }
+                          {isSignup&& <div className='login-btns-container'>
+                              <button className="button-19" role="button" onClick={onBackLogin} type="button"> Back to Log in </button>
+                              <button className="button-19" role="button" onClick={onSubmit} type="button"> Submit </button>
+                          </div>}
+                          
+                      </div>
+                  </div>
+              </form>
+            }
+
+            {loggedinUser && 
+              <div className='welcome-user'>
+                  <h3> Hello {loggedinUser.username} </h3>
+                  {console.log('loggedinUser:', loggedinUser)}
+                  <button className="button-19" role="button" onClick={onLogout} type="button"> Log out </button>
+              </div>
+            }
+          </div>
+          
+          
+      </section>
+  )
 }
