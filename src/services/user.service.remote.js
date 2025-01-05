@@ -40,7 +40,7 @@ function getLoggedInUser(  ){
 }
 
 async function saveLoggedinUser( user ){
-    user = { _id: user._id, username: user.username, bggUser: user.bggUser }
+    user = { _id: user._id, username: user.username, bggUser: user.bggUser , likedGamesArray: user.likedGamesArray, superLikedGames : user.superLikedGames}
     console.log('JSON.stringify(user):', JSON.stringify(user))
     sessionStorage.setItem( STORAGE_KEY_LOGGEDIN_USER , JSON.stringify(user))
     return user

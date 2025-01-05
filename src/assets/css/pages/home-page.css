@@ -34,3 +34,13 @@ html{
     margin: 10px;
     color: white;
 }
+
+.image-container{
+    height: 80%;
+    display: flex;
+    align-content: center;
+    background-color: black;
+    img{
+        object-fit: contain;
+    }
+}

@@ -5,7 +5,6 @@
 @import "basics/animations.css";
 
 /* Pages */
-@import "./pages/home.css";
 @import "./pages/home-page.css";
 @import "./pages/login-page.css";
 

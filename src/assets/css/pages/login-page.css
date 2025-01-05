@@ -45,3 +45,115 @@
     height: 80px;
     border-radius: 50%;
 }
+
+.login-btns-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.login-btns-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for contrast */
+}
+
+.actions-btn{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.button-19 {
+    width: 80%;
+    max-width: 400px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: white; /* Button background overridden to white */
+    color: black; /* Text color to match your theme */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s; /* Added transition for hover */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ff0055; /* Border for better visibility */
+}
+
+.button-19:hover {
+    background-color: lightblue; /* Slightly darker shade of pink for hover */
+    color: black; /* Text color changes to white for contrast */
+    transform: scale(1.03); /* Slight zoom effect */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-19:active {
+    transform: scale(0.97); /* Shrink slightly on click */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.button-19 img {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* Login Text Styles */
+.titleContainer {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for better contrast */
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Input Field Styles */
+.username-container, .password-container, .confirm-password-container, .bggUser-container {
+    display: grid;
+    padding: 10px 10px;
+    margin-bottom: -10px;
+    margin-inline: 10px;
+    border: none; /* Remove standard border */
+    border-radius: 15px; /* Rounded corners (not circular) */
+    font-size: 16px;
+    color: white;
+    background: rgba(255, 255, 255, 0.1); /* Transparent background with slight fill */
+    backdrop-filter: blur(5px); /* Optional: Blur for a glass effect */
+    transition: background 0.3s, box-shadow 0.3s, border-color 0.3s; /* Smooth transitions */
+    font-family: 'Arial', sans-serif;
+    .inputBox{
+        border-radius: 4px;
+        width: 100%;
+    }
+}
+
+/* Input Focus Effects */
+.username-container:focus, .password-container:focus, .confirm-password-container:focus, .bggUser-container:focus{
+    outline: none;
+    background: rgba(255, 255, 255, 0.2); /* Slightly brighter background on focus */
+    border: 1px ; /* Add a subtle border on focus */
+    box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.5); /* Glow effect */
+}
+
+/* Placeholder Text */
+.username-container::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Lighter placeholder text */
+    font-style: normal;
+}
+
+.errorLabel{
+    color: red;
+    font-weight: 400;
+    background-color: white;
+}

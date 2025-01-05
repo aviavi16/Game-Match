@@ -58,10 +58,13 @@ export function HomePage(){
                         preventSwipe={['up', 'down']}
                         onSwipe={dir => swiped(dir, person.name)}
                         onCardLeftScreen={() => outOfFrame(person.name)}>
-                        
-                        <div className="card" style={{backgroundImage: `url(${person.url})`}}>
+                            <div className="image-container">
+                                <img className="image-test" src={`${person.url}`} />
+                            </div>
+                       
+                        {/* <div className="card" style={{backgroundImage: `url(${person.url})`}}>
                             <h3> {person.name} </h3>
-                        </div>
+                        </div> */}
                     </TinderCard>
                 ))}
             </div>

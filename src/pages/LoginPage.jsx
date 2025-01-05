@@ -61,8 +61,8 @@ export function LoginPage() {
             throw 'validation error'
         }
 
-        if ('' === fullname) {
-            setFullnameError('Please enter your fullname')
+        if ('' === username) {
+            setUsernameError('Please enter your username')
             throw 'validation error'
         }
 
@@ -81,9 +81,6 @@ export function LoginPage() {
         var loggedUser = await userService.login ( { 
             username,
             password,
-            bggUser,
-            likedGamesArray,
-            superLikedGames
         } )
         loginUser(loggedUser)
     } catch (err) {
@@ -116,8 +113,6 @@ export function LoginPage() {
             username,
             bggUser,
             password,
-            likedGamesArray,
-            superLikedGames
         } )
         loginUser(user)
         showSuccessMsg( `Welcome ${user?.username}`)
@@ -172,86 +167,86 @@ export function LoginPage() {
               </div>
           </div>
           <div className="login-page-bg-container2">
-              
+            {!loggedinUser && 
+                <form className='form-container'>
+                    <div className={'mainContainer'}>
+                        {!isSignup && <div className={'titleContainer'}>
+                            <div>Login</div>
+                        </div>}
+
+                        {isSignup && <div className={'titleContainer'}>
+                            <div>Signup</div>
+                        </div>}
+                        <br />
+                      
+                        <div className={'username-container'}>
+                            <input
+                            value={username}
+                            placeholder="Username"
+                            onChange={(ev) => setUsername(ev.target.value)}
+                            className={'inputBox'}
+                            />
+                            <label className="errorLabel">{usernameError}</label>
+                        </div>
+                        <br />
+                        <div className={'password-container'}>
+                            <input
+                            value={password}
+                            placeholder="Password"
+                            onChange={(ev) => setPassword(ev.target.value)}
+                            className={'inputBox'}
+                            />
+                            <label className="errorLabel">{passwordError}</label>
+                        </div>
+
+                        <br />
+                        {isSignup && 
+                        <div className='signup-extra-fields'>
+
+                            <div className={'confirm-password-container'}>
+                            <input
+                                value={confirmPassword}
+                                placeholder="Confirm Password"
+                                onChange={(ev) => setConfirmPassword(ev.target.value)}
+                                className={'inputBox'}
+                                required
+                                />
+                                <label className="errorLabel">{confirmPasswordError}</label>
+                            </div>
+
+                            <br/>
+                            <div className={'bggUser-container'}>
+                            <input
+                                value={bggUser}
+                                placeholder="BggUser"
+                                onChange={(ev) => setBggUser(ev.target.value)}
+                                className={'inputBox'}
+                                required
+                                />
+                            </div>
+                        </div>
+                        }
+                        <br />
+                        <div className={'actions-btn'}>
+                            {!isSignup && <div className='login-btns-container'>
+                                <button className="button-19" role="button" onClick={onLogin} type="button"> Log in </button>
+                                <button className="button-19" role="button" onClick={onSignup} type="button"> Sign up </button>
+                                <button type="button" onClick={onGuest} className="button-19" role="button"> Continue as a Guest </button>
+                            </div>
+                            }
+                            {isSignup&& <div className='login-btns-container'>
+                                <button className="button-19" role="button" onClick={onBackLogin} type="button"> Back to Log in </button>
+                                <button className="button-19" role="button" onClick={onSubmit} type="button"> Submit </button>
+                            </div>}
+                            
+                        </div>
+                    </div>
+                </form>
+                }
             
           </div>
           <div className="login-page-bg-container3">
-            {!loggedinUser && 
-              <form className='form-container'>
-                  <div className={'mainContainer'}>
-                      {!isSignup && <div className={'titleContainer'}>
-                          <div>Login</div>
-                      </div>}
-
-                      {isSignup && <div className={'titleContainer'}>
-                          <div>Signup</div>
-                      </div>}
-                      <br />
-                      <div className={'username-container'}>
-                          <input
-                          value={username}
-                          placeholder="Enter your username here"
-                          onChange={(ev) => setUsername(ev.target.value)}
-                          className={'inputBox'}
-                          />
-                          <label className="errorLabel">{usernameError}</label>
-                      </div>
-                      <br />
-                      <div className={'password-container'}>
-                          <input
-                          value={password}
-                          placeholder="Enter your password here"
-                          onChange={(ev) => setPassword(ev.target.value)}
-                          className={'inputBox'}
-                          />
-                          <label className="errorLabel">{passwordError}</label>
-                      </div>
-
-                      <br />
-                      {isSignup && 
-                      <div className='signup-extra-fields'>
-
-                          <div className={'confirm-password-container'}>
-                          <input
-                              value={confirmPassword}
-                              placeholder="Enter your confirm password here"
-                              onChange={(ev) => setConfirmPassword(ev.target.value)}
-                              className={'inputBox'}
-                              required
-                              />
-                              <label className="errorLabel">{confirmPasswordError}</label>
-                          </div>
-
-                          <br/>
-                          <div className={'bggUser-container'}>
-                          <input
-                              value={bggUser}
-                              placeholder="Enter your bggUser here"
-                              onChange={(ev) => setBggUser(ev.target.value)}
-                              className={'inputBox'}
-                              required
-                              />
-                          </div>
-                      </div>
-                      }
-
-                      <br />
-                      <div className={'actions-btn'}>
-                          {!isSignup && <div className='login-btns-container'>
-                              <button className="button-19" role="button" onClick={onLogin} type="button"> Log in </button>
-                              <button className="button-19" role="button" onClick={onSignup} type="button"> Sign up </button>
-                              <button type="button" onClick={onGuest} className="button-19" role="button"> Continue as a Guest </button>
-                          </div>
-                          }
-                          {isSignup&& <div className='login-btns-container'>
-                              <button className="button-19" role="button" onClick={onBackLogin} type="button"> Back to Log in </button>
-                              <button className="button-19" role="button" onClick={onSubmit} type="button"> Submit </button>
-                          </div>}
-                          
-                      </div>
-                  </div>
-              </form>
-            }
+            
 
             {loggedinUser && 
               <div className='welcome-user'>
