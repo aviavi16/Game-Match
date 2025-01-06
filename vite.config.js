@@ -8,5 +8,9 @@ export default defineConfig({
   plugins: [react(), svgr()],
   define: {
     'process.env': {}
+  },
+  build: {
+    outDir: '../GameMatch-backend/public',
+    emptyOutDir: true
   }
 })
