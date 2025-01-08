@@ -31,8 +31,9 @@ export function HomePage(){
 
     async function loadNext5Games( gamesArray){
         var nextGames = []
+        let bggArr = []
         for(var i =0; i< 5; i++){
-            const bggArr = await gamesArray
+            bggArr = await gamesArray
             console.log('wait gamesArray[0]:',bggArr[i].id)
             var gameData = await xmlUtilService.getGameDataById(bggArr[i].id)
             nextGames.push(gameData)
