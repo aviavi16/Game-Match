@@ -24,6 +24,7 @@ export function HomePage(){
     }, [])
 
     async function loadData(){
+        setBrowse( await bggService.getHottestGames())
         //  var data2 = await bggService.getBGGCollection("aviavi16")
         //  console.log('data2:', data2)
     }
