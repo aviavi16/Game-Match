@@ -24,6 +24,7 @@ html{
 }
 
 .swipe{
+    width: 100%;
     position: absolute;
     height: 80%;
 }
@@ -40,6 +41,7 @@ html{
     display: flex;
     align-content: center;
     background-color: black;
+    justify-content: center;
     img{
         object-fit: contain;
     }

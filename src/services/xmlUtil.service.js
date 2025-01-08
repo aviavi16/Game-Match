@@ -1,45 +1,55 @@
+import { bggService } from "./bgg.service";
+import { httpService } from "./http.service.remote";
 
 export const xmlUtilService = {
-    getDataById,
-    getProxyData,
+    getHottestCollection,
+    getImageByGameId,
+    getGameDataById
 }
 
-function getDataById( id) {
-    var req = new XMLHttpRequest();
-            req.open("GET", "http://localhost:8080/https://www.boardgamegeek.com/xmlapi2/thing?id=013", false);
-            req.send(null);
-            console.log(req.responseText);
+async function getHottestCollection( data) {
+  var res = [];
+  var gameObject = {
+    name: "",
+    image: ""
+  }
+
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(data, "text/xml");
+  //Get the number of items - we know this will be two because we only passed in two IDs
+  var numberOfNames = xmlDoc.getElementsByTagName("item").length;
+  
+  //Create an array of the items
+  var items = xmlDoc.getElementsByTagName("item");
+  for (var i=0; i<numberOfNames; i++) {
+      gameObject.name = items[i].getElementsByTagName('name')[0].getAttribute('value')
+      gameObject.image = await _getImageByGameTitle(gameObject.name)
+      res.push(gameObject)
+  }
+
+  return res;
 }
 
-async function getProxyData( username ) {
-    const proxyUrl = `https://cors-anywhere.herokuapp.com/https://www.boardgamegeek.com/xmlapi2/collection?username=${username}&subtype=boardgame&own=1`;
+async function _getImageByGameTitle( gameTitle ){
+  var gameData = await bggService.getGameByTitle( gameTitle )
+  console.log('gameData:', gameData)
+  var items = gameData.getElementsByTagName("item");
+  return "https:" + items[0].getElementsByTagName("image"[0].childNodes[0].nodeValue)
+}
 
-    try {
-      const response = await fetch(proxyUrl);
-      const responseText = await response.text();
-      return responseText;
-    } catch (error) {
-      console.error("Error fetching via proxy:", error.message);
-     }    //try {
-    //     const response = await fetch(proxyUrl);
-      
-    //     // The API might return an HTTP 200 status even for errors, so check the response text for errors
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP Error: ${response.status}`);
-    //     }
-      
-    //     const responseText = await response.text(); // Get response as text
-    //     const parser = new DOMParser();
-    //     const xmlDoc = parser.parseFromString(responseText, "application/xml");
-      
-    //     // Check if the response contains <errors>
-    //     const errorNode = xmlDoc.querySelector("error > message");
-    //     if (errorNode) {
-    //       console.error("Error message from API:", errorNode.textContent);
-    //     } else {
-    //       console.log("Data fetched successfully:", responseText);
-    //     }
-    //   } catch (error) {
-    //     console.error("Fetch error:", error.message);
-    //   }
+async function getImageByGameId( gameId ){
+  var gameData =  await httpService.get(`bgg/search/${gameId}`)
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(gameData, "text/xml");
+  var res = xmlDoc.getElementsByTagName("image")[0].innerHTML
+  return res
+}
+
+async function getGameDataById( gameId ){
+  var gameData =  await httpService.get(`bgg/search/${gameId}`)
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(gameData, "text/xml");
+  var name = xmlDoc.getElementsByTagName("name")[0].getAttribute('value');
+  var url = xmlDoc.getElementsByTagName("image")[0].innerHTML
+  return { gameId, name, url}
 }

@@ -1,7 +1,9 @@
 import { userService } from "../../services/user.service.remote.js"
+import { bggService } from "../../services/bgg.service"
 
 const intialState = {
-    loggedinUser : userService.getLoggedInUser() 
+    loggedinUser : userService.getLoggedInUser() ,
+    bggHottestGames : bggService.getHottestGames() 
 }
 
 export const USER_LOGGED = 'USER_LOGGED'

@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react"
 import TinderCard from "react-tinder-card"
+import { bggService } from "../services/bgg.service"
 import { xmlUtilService } from "../services/xmlUtil.service"
 
+import { useSelector } from "react-redux"
+
 export function HomePage(){
+    let gamesArray = useSelector( storeState => storeState.bggHottestGames ) 
+
     const [people, setPeople] = useState([
         {name: "Gaia Project", url: "https://res.cloudinary.com/thekingdom/image/fetch/c_limit,f_jpg,h_555,q_auto,w_555/https://cf.geekdo-images.com/images/pic3528112.jpg"},
         {name: "Terraforming mars", url: "https://images.squarespace-cdn.com/content/v1/591861c529687fd2ca03c3f3/1665422600142-L0C42JQ49BJNHIODGV07/Spiral+Galaxy+Oct22-3.jpg?format=2500w"},
@@ -11,33 +16,25 @@ export function HomePage(){
     ])
 
     useEffect(() => {
-        //loadData()
+        loadData()
     }, [])
 
     async function loadData(){
-        var data = await xmlUtilService.getProxyData("aviavi123123")
-        console.log('data:', data)
-        var data2 = await xmlUtilService.getProxyData("aviavi16")
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(data2, "text/xml");
-        //Get the number of items - we know this will be two because we only passed in two IDs
-        var numberOfNames = xmlDoc.getElementsByTagName("item").length;
-        
-        //Create an array of the items
-        var items = xmlDoc.getElementsByTagName("item");
-        for (var i=0; i<numberOfNames; i++) {
-            //Create a new paragraph tag
-            var tempName = document.createElement("p");
-            
-            //Get the name of a game in the collection
-            var gameName = items[i].getElementsByTagName('name')[0].innerHTML;
-           
-            //Set the contents of the paragraph tag to the game name
-            tempName.innerHTML = gameName;
-            
-            //Add the paragraph tag to the div in the body
-            document.getElementById("gameNames").appendChild(tempName);
+         var data2 = await bggService.getBGGCollection("aviavi16")
+         console.log('data2:', data2)
+         loadNext5Games(gamesArray)
+        //  setPeople()
+    }
+
+    async function loadNext5Games( gamesArray){
+        var nextGames = []
+        for(var i =0; i< 5; i++){
+            const bggArr = await gamesArray
+            console.log('wait gamesArray[0]:',bggArr[i].id)
+            var gameData = await xmlUtilService.getGameDataById(bggArr[i].id)
+            nextGames.push(gameData)
         }
+        setPeople( nextGames  )
     }
 
     function swiped (direction, nameToDelete){
