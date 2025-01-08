@@ -4,8 +4,11 @@ import { bggService } from "../services/bgg.service"
 import { xmlUtilService } from "../services/xmlUtil.service"
 
 import { useSelector } from "react-redux"
+import { UseFirstRenderEffect } from "../cmps/UseFirstRenderEffect"
+import { setBrowse } from "../store/games/games.actions"
 
 export function HomePage(){
+    let countdownToExtincion = 5
     let gamesArray = useSelector( storeState => storeState.bggHottestGames ) 
 
     const [people, setPeople] = useState([
@@ -13,6 +16,7 @@ export function HomePage(){
         {name: "Terraforming mars", url: "https://images.squarespace-cdn.com/content/v1/591861c529687fd2ca03c3f3/1665422600142-L0C42JQ49BJNHIODGV07/Spiral+Galaxy+Oct22-3.jpg?format=2500w"},
         {name: "Great western trail", url: "https://m.media-amazon.com/images/I/81jyHMaoiVL.__AC_SX300_SY300_QL70_FMwebp_.jpg"},
         {name: "Anachrony", url: "https://lostdice.com/wp-content/uploads/2017/05/Anachrony-Box-Cover-550x381.jpg"},
+        {name: "Gaia Project", url: "https://res.cloudinary.com/thekingdom/image/fetch/c_limit,f_jpg,h_555,q_auto,w_555/https://cf.geekdo-images.com/images/pic3528112.jpg"},
     ])
 
     useEffect(() => {
@@ -22,8 +26,6 @@ export function HomePage(){
     async function loadData(){
          var data2 = await bggService.getBGGCollection("aviavi16")
          console.log('data2:', data2)
-         loadNext5Games(gamesArray)
-        //  setPeople()
     }
 
     async function loadNext5Games( gamesArray){
@@ -34,6 +36,8 @@ export function HomePage(){
             var gameData = await xmlUtilService.getGameDataById(bggArr[i].id)
             nextGames.push(gameData)
         }
+        bggArr.splice(0, 5)
+        setBrowse( bggArr )
         setPeople( nextGames  )
     }
 
@@ -43,6 +47,11 @@ export function HomePage(){
 
     function outOfFrame (name){
         console.log( name + ' left the screen') 
+        countdownToExtincion--;
+        if(countdownToExtincion <= 0){
+            countdownToExtincion = 5
+            loadNext5Games(gamesArray)
+        }  
     }
 
     return (

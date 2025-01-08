@@ -1,13 +1,13 @@
 import { userService } from "../../services/user.service.remote.js"
-import { bggService } from "../../services/bgg.service"
 
 const intialState = {
     loggedinUser : userService.getLoggedInUser() ,
-    bggHottestGames : bggService.getHottestGames() 
+    bggHottestGames : []
 }
 
 export const USER_LOGGED = 'USER_LOGGED'
 export const USER_LOGOUT = 'USER_LOGOUT'
+export const SET_BROWSE = 'SET_BROWSE'
 
 export function userReducer ( state = intialState, cmd = {}  ){
     switch (cmd.type){
@@ -20,6 +20,11 @@ export function userReducer ( state = intialState, cmd = {}  ){
             return{
                 ...state,
                 loggedinUser : null
+            }  
+        case SET_BROWSE :
+            return{
+                ...state,
+                bggHottestGames : cmd.gamesArray
             }  
         default:
             return state
