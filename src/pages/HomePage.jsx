@@ -24,8 +24,8 @@ export function HomePage(){
     }, [])
 
     async function loadData(){
-         var data2 = await bggService.getBGGCollection("aviavi16")
-         console.log('data2:', data2)
+        //  var data2 = await bggService.getBGGCollection("aviavi16")
+        //  console.log('data2:', data2)
     }
 
     async function loadNext5Games( gamesArray){
@@ -46,6 +46,7 @@ export function HomePage(){
     }
 
     function outOfFrame (name){
+        bggService.sendLog()
         console.log( name + ' left the screen') 
         countdownToExtincion--;
         if(countdownToExtincion <= 0){
