@@ -7,6 +7,7 @@ import { Chats } from './cmps/Chats';
 import { ChatScreen } from './cmps/ChatScreen';
 import { LoginPage } from './pages/LoginPage';
 import { UserMsg } from './cmps/UserMsg';
+import { BrowsePage } from './pages/BrowsePage';
 export function App() {
 
     return (
@@ -14,13 +15,13 @@ export function App() {
             <UserMsg />
             <Router>
                 <Routes >
-                    <Route path='/chat/:person' element={
+                    <Route path='/messages/:boardgame' element={
                         <>       
                             <ChatScreen />
                             <Menu />
                         </>
                     }> </Route>
-                    <Route path='/chat' element={
+                    <Route path='/messages' element={
                         <>             
                             <Chats />  
                             <Menu />       
@@ -33,6 +34,20 @@ export function App() {
                             <Menu />
                         </>  
                                
+                    } />
+                    <Route path='/search' element={
+                        <>
+                            <BrowsePage />
+                            <SwipeButtons /> 
+                            <Menu />
+                        </>                        
+                    } />
+                    <Route path='/likes' element={
+                        <>
+                            <Chats />
+                            <SwipeButtons /> 
+                            <Menu />
+                        </>                        
                     } />
                     <Route path='/' element={
                         <>

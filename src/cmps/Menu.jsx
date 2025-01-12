@@ -12,23 +12,35 @@ import profileIcon from "../assets/imgs/profileIcon2.png"
 export function Menu({ }){
     const navigate = useNavigate()
 
-    function navigateToChat(){
-        navigate("/chat")
+    function navigateToPref(){
+        navigate("/preferences")
+    }
+
+    function navigateHome(){
+        navigate("/homepage")
+    }
+
+    function navigateToLikes(){
+        navigate("/likes")
+    }
+
+    function navigateToMessages(){
+        navigate("/messages")
     }
     
     return(
         <section className="menu-container">
             <div className='menu-icons-container'>
-                <IconButton className='menu-icon-container' onClick={navigateToChat}>
+                <IconButton className='menu-icon-container' onClick={navigateHome}>
                     <DiscoverIcon className="menu-icon" />                  
                 </IconButton>
-                <IconButton className='menu-icon-container' onClick={navigateToChat}>
+                <IconButton className='menu-icon-container' onClick={navigateToLikes}>
                     <LikesIcon className="menu-icon" />                  
                 </IconButton>  
-                <IconButton className='menu-icon-container' onClick={navigateToChat}>
+                <IconButton className='menu-icon-container' onClick={navigateToMessages}>
                     <MessagesIcon className="menu-icon" />                  
                 </IconButton>
-                <IconButton className='menu-icon-container' onClick={navigateToChat}>
+                <IconButton className='menu-icon-container' onClick={navigateToPref}>
                     <PreferencesIcon className="menu-icon" />                  
                 </IconButton>  
                 <IconButton className='menu-icon-container'>

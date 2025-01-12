@@ -25,7 +25,7 @@ export function ChatScreen(){
     return(
         <section className="chat-screen-container">
             <p className="chat-screen-time"> 
-                {`YOU MATCHED WITH ${ (game.person.toUpperCase())} ON 
+                {`YOU MATCHED WITH ${ (game.boardgame.toUpperCase())} ON 
                     ${new Date().toLocaleDateString()}`} </p>
             {messages.map((item, index) =>(
                 item.name ? (

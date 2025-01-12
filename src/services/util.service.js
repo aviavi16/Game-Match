@@ -1,9 +1,10 @@
+import fs from 'fs'
 
 export const utilService = {
     makeId,
     saveToStorage,
     loadFromStorage,
-    getFilterFromSearchParams
+    getFilterFromSearchParams,
 }
 
 function makeId(length = 5) {
