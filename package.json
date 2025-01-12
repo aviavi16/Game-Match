@@ -12,7 +12,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@material-ui/icons": "^4.11.3",
+    "@material/tooltip": "^14.0.0",
+    "@mui/material": "^6.3.1",
     "@react-spring/web": "^9.5.5",
     "axios": "^1.7.9",
     "cors-anywhere": "^0.4.4",

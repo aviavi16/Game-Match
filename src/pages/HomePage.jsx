@@ -2,22 +2,23 @@ import { useEffect, useState } from "react"
 import TinderCard from "react-tinder-card"
 import { bggService } from "../services/bgg.service"
 import { xmlUtilService } from "../services/xmlUtil.service"
+import SearchIcon from '../assets/svgs/search.svg?react';
 
 import { useSelector } from "react-redux"
-import { UseFirstRenderEffect } from "../cmps/UseFirstRenderEffect"
+import Tooltip from '@mui/material/Tooltip';
 import { setBrowse } from "../store/games/games.actions"
+import { useNavigate, useParams } from "react-router-dom"
+import { utilService } from "../services/util.service"
 
 export function HomePage(){
+    const params = useParams()
+    const [searchTerm, setSearchTerm] = useState(utilService.getFilterFromSearchParams(params)); // Declare and initialize searchTerm
+    const navigate = useNavigate()
+
     let countdownToExtincion = 5
     let gamesArray = useSelector( storeState => storeState.bggHottestGames ) 
 
-    const [people, setPeople] = useState([
-        {name: "Gaia Project", url: "https://res.cloudinary.com/thekingdom/image/fetch/c_limit,f_jpg,h_555,q_auto,w_555/https://cf.geekdo-images.com/images/pic3528112.jpg"},
-        {name: "Terraforming mars", url: "https://images.squarespace-cdn.com/content/v1/591861c529687fd2ca03c3f3/1665422600142-L0C42JQ49BJNHIODGV07/Spiral+Galaxy+Oct22-3.jpg?format=2500w"},
-        {name: "Great western trail", url: "https://m.media-amazon.com/images/I/81jyHMaoiVL.__AC_SX300_SY300_QL70_FMwebp_.jpg"},
-        {name: "Anachrony", url: "https://lostdice.com/wp-content/uploads/2017/05/Anachrony-Box-Cover-550x381.jpg"},
-        {name: "Gaia Project", url: "https://res.cloudinary.com/thekingdom/image/fetch/c_limit,f_jpg,h_555,q_auto,w_555/https://cf.geekdo-images.com/images/pic3528112.jpg"},
-    ])
+    const [boardGames, setBoardGames] = useState(bggService.getHardCodedGamesArray())
 
     useEffect(() => {
         loadData()
@@ -40,7 +41,7 @@ export function HomePage(){
         }
         bggArr.splice(0, 5)
         setBrowse( bggArr )
-        setPeople( nextGames  )
+        setBoardGames( nextGames  )
     }
 
     function swiped (direction, nameToDelete){
@@ -57,22 +58,57 @@ export function HomePage(){
         }  
     }
 
+    function handleSearchClick() {
+        if (!searchTerm.filterText) navigate(`/search/${searchTerm.filterText}`)
+    }
+
+    const handleSearchChange = (event) => {
+        if (event.target.value)
+            navigate(`/search/${event.target.value}`)
+        setSearchTerm({ filterText: event.target.value }); // Update searchTerm state when input changes
+    }
+
+    const handleOtherButtonClick = () => {
+        onClickSearch()
+        setActiveButton(''); // Reset active button on other button click
+    }
+
     return (
         <section className="game-match">
             <div className="home-page-container">
-                {people.map( (person) =>(
+                {/* Search Bar */}
+                <div className="search-bar-mobile">
+                    <Tooltip title="Search" arrow>
+                        <div onClick={handleOtherButtonClick}>
+                            <SearchIcon className="search-icon" />
+                        </div>
+                    </Tooltip>
+                    <input
+                        type="text" 
+                        className='search-bar-input'
+                        placeholder="Is there a specific game you have in mind?"
+                        value={searchTerm.filterText}  // Bind searchTerm to input
+                        onChange={handleSearchChange} // Handle input change
+                        onClick={handleSearchClick}
+                    />
+                </div>
+                
+                {boardGames.map( (boardGame) =>(
                     <TinderCard 
                         className="swipe"
-                        key={person.name}
+                        key={boardGame.name}
                         preventSwipe={['up', 'down']}
-                        onSwipe={dir => swiped(dir, person.name)}
-                        onCardLeftScreen={() => outOfFrame(person.name)}>
-                            <div className="image-container">
-                                <img className="image-test" src={`${person.url}`} />
+                        onSwipe={dir => swiped(dir, boardGame.name)}
+                        onCardLeftScreen={() => outOfFrame(boardGame.name)}>
+                            <div className="card-container">
+                                <div className="image-container">
+                                    <img className="image-test" src={`${boardGame.image}`} />
+                                </div>
                             </div>
+                           
                        
-                        {/* <div className="card" style={{backgroundImage: `url(${person.url})`}}>
-                            <h3> {person.name} </h3>
+                        {/* <div className="card" style={{backgroundImage: `url(${boardGame.url})`}}>
+                            <h3> {boardGame.name} </h3>
                         </div> */}
                     </TinderCard>
                 ))}

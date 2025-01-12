@@ -49,7 +49,8 @@ async function getGameDataById( gameId ){
   var gameData =  await httpService.get(`bgg/search/${gameId}`)
   var parser = new DOMParser();
   var xmlDoc = parser.parseFromString(gameData, "text/xml");
+  console.log('xmlDoc:', xmlDoc)
   var name = xmlDoc.getElementsByTagName("name")[0].getAttribute('value');
-  var url = xmlDoc.getElementsByTagName("image")[0].innerHTML
-  return { gameId, name, url}
+  var image = xmlDoc.getElementsByTagName("image")[0].innerHTML
+  return { gameId, name, image}
 }

@@ -5,7 +5,6 @@ html{
 .home-page-container{
     display: flex;
     justify-content: center;
-    margin-top: 10vh;
 }
 
 .card{
@@ -37,7 +36,7 @@ html{
 }
 
 .image-container{
-    height: 80%;
+    height: 66.66vh;
     display: flex;
     align-content: center;
     background-color: black;
@@ -45,4 +44,84 @@ html{
     img{
         object-fit: contain;
     }
+}
+
+.card-container{
+    display: flex;
+    align-content: center;
+    height: 100svh;
+    flex-wrap: wrap;
+    background-color: rgb(31, 30, 30);
+}
+
+.search-bar-mobile {
+	display: flex;
+    position: absolute;
+    top: 20px;
+    z-index: 100;
+	align-items: center;
+	background-color: white;
+	border-radius: 20px;
+	padding: 0.7rem;
+	width: 90%;
+	/* Keep the width fixed */
+	transition: background-color 0.2s ease, color 0.2s ease;
+	/* No width transition */
+	border: 2px solid transparent;
+	gap: 10px;
+
+	input {
+		border: none;
+		background: none;
+		outline: none;
+        color:#333; 
+		/* Default color for placeholder and text */
+		width: 100%;
+		/* Ensure the input takes full width */
+		transition: color 0.2s ease;
+	}
+
+	input:focus {
+		border-color: white;
+		/* Change border color on focus */
+		color: white;
+		/* Change input text color on focus */
+	}
+
+
+	.search-icon {
+		width: 24px;
+		height: 24px;
+		fill: #b3b3b3;
+		/* Default icon color */
+		transition: fill 0.2s ease;
+		/* Smooth color change */
+	}
+
+	/* Focus effect for the entire search-bar when input is focused */
+	input:focus+.separator,
+	input:focus+.browse-icon,
+	input:focus {
+		border-color: white;
+		/* Change border to white on focus */
+	}
+
+	/* Focus effect for the whole search-bar when input is focused */
+	&:has(input:focus) {
+		border-color: white;
+		/* White border when focused */
+	}
+
+	/* Placeholder style */
+	.search-bar-input {
+		&::placeholder {
+			border: none;
+			background: none;
+			outline: none;
+			color: #b3b3b3;
+			width: 100%;
+			transition: color 0.2s ease;
+			font-size: 16px; /* Optional: Adjust font size for placeholder */
+		}
+	}
 }

@@ -2,7 +2,8 @@
 export const utilService = {
     makeId,
     saveToStorage,
-    loadFromStorage
+    loadFromStorage,
+    getFilterFromSearchParams
 }
 
 function makeId(length = 5) {
@@ -21,4 +22,13 @@ function saveToStorage(key, value) {
 function loadFromStorage(key, defaultValue = null) {
     var value = localStorage[key] || defaultValue;
     return JSON.parse(value);
+}
+
+//TODO feels like there is a bug in this function
+function getFilterFromSearchParams(searchParams){
+    const filterBy = {
+        filterText: searchParams.size > 0 ?  searchParams.filterText : ''
+
+    }
+    return filterBy
 }

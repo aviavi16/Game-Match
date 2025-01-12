@@ -21,15 +21,6 @@ export function LoginPage() {
 
     //will be in the store in the future
     let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
-
-    // useEffect(() => {
-    //     loadGames()
-    // }, [])
-
-    // async function loadGames(){        
-    //     const browseGames  = bggService.getHottestGames() 
-    //     setBrowse(browseGames)
-    // }
     
     function onValidation () {
         // Set initial error values to empty
@@ -229,7 +220,6 @@ export function LoginPage() {
                                     placeholder="BggUser"
                                     onChange={(ev) => setBggUser(ev.target.value)}
                                     className={'inputBox'}
-                                    required
                                     />
                                 </div>
                             </div>
