@@ -50,7 +50,7 @@ export function SearchResultsPage() {
                 </div>
 
                 <div className="list-container">
-                    {foundBoardgames.map((boardgame, i) => {
+                    {foundBoardgames.slice(1).map((boardgame, i) => {
                         return <SearchResultsPreviewObject miniObject={boardgame} key={boardgame.id} />
                     }
                     )}
