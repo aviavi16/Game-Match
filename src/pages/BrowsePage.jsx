@@ -34,11 +34,12 @@ export function BrowsePage(){
 
     async function loadCategories() {
         try {
+            var index = 0;
             const test = allMechanics
             console.log(test)
-            miniCategories.current = allMechanics.map(category => ({
+            miniCategories.current = allMechanics.map((category) => ({
                 name: category.name,
-                image: category.image ? category.image : 'https://via.placeholder.com/300',
+                image: category.image ? category.image : new URL(`https://robohash.org/${index++}`),
             }))
             setCategories(miniCategories.current)
         } catch (error) {
@@ -67,16 +68,18 @@ export function BrowsePage(){
                 />
             </div>
 
-            <h1 className="browse-header">Browse all</h1>
-            <div className="categories-grid">
-                {categories.map((category) => (
-                    <div className="category-card" key={category.id}>
-                        <div className="category-image">
-                            <img src={category.image} alt={category.name} />
+            <div className='browse-page-container'>
+                <h1 className="browse-header">Browse all</h1>
+                <div className="categories-grid">
+                    {categories.map((category) => (
+                        <div className="category-card" key={category.name}>
+                            <div className="category-image">
+                                <img src={category.image} alt={category.name} />
+                            </div>
+                            <h2 className="category-name">{category.name}</h2>
                         </div>
-                        <h2 className="category-name">{category.name}</h2>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     )
