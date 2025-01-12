@@ -5,7 +5,8 @@ export const bggService = {
     getHottestGames,
     getGameById,
     sendLog,
-    getHardCodedGamesArray
+    getHardCodedGamesArray,
+    getGamesArrayByTitle,
 }
 
 
@@ -23,6 +24,11 @@ async function getHottestGames() {
 async function getGameById( gameId ) {
     const gameData = await httpService.get(`bgg/search/${gameId}`)
     if (gameData) return gameData  
+}
+
+async function getGamesArrayByTitle( gameTitle ) {
+    const gamesArray = await httpService.get(`bgg/search/title/${gameTitle}`)
+    if (gamesArray) return gamesArray  
 }
 
 async function sendLog() {

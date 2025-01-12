@@ -5,6 +5,7 @@ export const utilService = {
     saveToStorage,
     loadFromStorage,
     getFilterFromSearchParams,
+    debounce,
 }
 
 function makeId(length = 5) {
@@ -32,4 +33,12 @@ function getFilterFromSearchParams(searchParams){
 
     }
     return filterBy
+}
+
+function debounce(func, timeout = 300) {
+    let timer
+    return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => { func.apply(this, args) }, timeout)
+    }
 }

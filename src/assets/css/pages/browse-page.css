@@ -69,6 +69,8 @@
 
 .browse-page-container{
     margin-block-start: 100px;
+    display: flex;
+    flex-direction: column;
 }
 
 .browse-page {
@@ -80,6 +82,7 @@
     .browse-header {
         font-size: 2rem;
         margin-bottom: 20px;
+        align-self: center;
     }
 
     .categories-grid {

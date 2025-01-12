@@ -8,6 +8,9 @@ import { ChatScreen } from './cmps/ChatScreen';
 import { LoginPage } from './pages/LoginPage';
 import { UserMsg } from './cmps/UserMsg';
 import { BrowsePage } from './pages/BrowsePage';
+import { PreferencePage } from './pages/PreferencePage';
+import { LikesPage } from './pages/LikesPage';
+import { SearchResultsPage } from './pages/SearchResultsPage';
 export function App() {
 
     return (
@@ -32,20 +35,30 @@ export function App() {
                             <HomePage />
                             <SwipeButtons /> 
                             <Menu />
+                        </>          
+                    } />
+                    <Route path='/preferences' element={
+                        <>
+                            <PreferencePage /> 
+                            <Menu />
                         </>  
                                
                     } />
                     <Route path='/search' element={
                         <>
                             <BrowsePage />
-                            <SwipeButtons /> 
+                            <Menu />
+                        </>                        
+                    } />
+                    <Route path='/search/:filterText' element={
+                        <>
+                            <SearchResultsPage />
                             <Menu />
                         </>                        
                     } />
                     <Route path='/likes' element={
                         <>
-                            <Chats />
-                            <SwipeButtons /> 
+                            <LikesPage />
                             <Menu />
                         </>                        
                     } />

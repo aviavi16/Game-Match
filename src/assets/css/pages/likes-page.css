@@ -1,0 +1,47 @@
+.likes-header{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    flex-wrap: wrap;
+    align-content: center;
+    font-weight: 500;
+}
+
+.likes-container{
+    background-color: rgb(247, 206, 212);
+    display: grid;
+    height: 100vh;
+    grid-template-areas: 
+        "title"
+        "list"
+        ;
+    grid-template-rows: 0.4fr 4fr;
+}
+
+.likes-title-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    grid-area: title;
+}
+
+.likes-subtTitle{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    color: #3b3b3b;
+}
+
+.likes-title{
+    font-size: 18px;
+    padding: 6px;
+}
+
+.like-list-container{
+    grid-area: list;
+}
