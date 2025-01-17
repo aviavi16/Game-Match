@@ -73,8 +73,11 @@ export function HomePage(){
                     />
                 </div>
                 
-                {boardGames.map( (boardGame) =>(
-                    <TinderCard 
+                {boardGames.map( (boardGame) =>{
+                    const { id, name, image} = boardGame
+                    if ( name === null || image  === null)
+                        return
+                    return <TinderCard 
                         className="swipe"
                         key={boardGame.name}
                         preventSwipe={['up', 'down']}
@@ -85,13 +88,10 @@ export function HomePage(){
                                     <img className="image-test" src={`${boardGame.image}`} />
                                 </div>
                             </div>
-                           
-                       
-                        {/* <div className="card" style={{backgroundImage: `url(${boardGame.url})`}}>
-                            <h3> {boardGame.name} </h3>
-                        </div> */}
                     </TinderCard>
-                ))}
+                }
+                    
+                )}
             </div>
             <div id="gameNames"></div>
 
