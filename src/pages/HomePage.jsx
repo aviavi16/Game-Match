@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import TinderCard from "react-tinder-card"
 import { bggService } from "../services/bgg.service"
 import { xmlUtilService } from "../services/xmlUtil.service"
@@ -17,31 +17,15 @@ export function HomePage(){
 
     let countdownToExtincion = 5
     let gamesArray = useSelector( storeState => storeState.bggHottestGames ) 
-
-    const [boardGames, setBoardGames] = useState(bggService.getHardCodedGamesArray())
+    const [boardGames, setBoardGames] = useState([])
 
     useEffect(() => {
         loadData()
     }, [])
 
     async function loadData(){
-        setBrowse( await bggService.getHottestGames())
-        //  var data2 = await bggService.getBGGCollection("aviavi16")
-        //  console.log('data2:', data2)
-    }
-
-    async function loadNext5Games( gamesArray){
-        var nextGames = []
-        let bggArr = []
-        for(var i =0; i< 5; i++){
-            bggArr = await gamesArray
-            console.log('wait gamesArray[0]:',bggArr[i].id)
-            var gameData = await xmlUtilService.getGameDataById(bggArr[i].id)
-            nextGames.push(gameData)
-        }
-        bggArr.splice(0, 5)
-        setBrowse( bggArr )
-        setBoardGames( nextGames  )
+        let hottestGamesArray_mini = await bggService.getHottestGames()
+        setBoardGames( hottestGamesArray_mini)
     }
 
     function swiped (direction, nameToDelete){
@@ -51,11 +35,6 @@ export function HomePage(){
     function outOfFrame (name){
         bggService.sendLog()
         console.log( name + ' left the screen') 
-        countdownToExtincion--;
-        if(countdownToExtincion <= 0){
-            countdownToExtincion = 5
-            loadNext5Games(gamesArray)
-        }  
     }
 
     function handleSearchClick() {
@@ -73,6 +52,7 @@ export function HomePage(){
         setActiveButton(''); // Reset active button on other button click
     }
 
+    if (!boardGames) return <p> Please wait. </p>
     return (
         <section className="game-match">
             <div className="home-page-container">

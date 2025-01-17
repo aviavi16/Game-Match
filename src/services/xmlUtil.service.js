@@ -4,7 +4,8 @@ import { httpService } from "./http.service.remote";
 export const xmlUtilService = {
     getImageByGameId,
     getGameDataById,
-    getGamesArrayByName
+    getGamesArrayByName,
+    getGameImageById
 }
 
 async function getImageByGameId( gameId ){
@@ -22,6 +23,10 @@ async function getGameDataById( gameId ){
   var name = xmlDoc.getElementsByTagName("name")[0].getAttribute('value');
   var image = xmlDoc.getElementsByTagName("image")[0].innerHTML
   return { gameId, name, image}
+}
+
+async function getGameImageById( gameIds ){
+  return await httpService.get(`bgg/search/image/${gameIds}`)
 }
 
 async function getGamesArrayByName( gamesArrayData, limit = 5){
