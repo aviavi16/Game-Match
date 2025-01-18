@@ -1,38 +1,48 @@
 .swipe-btns-container{
-    position: fixed;
-    bottom: 30vh;
-    display: flex;
     display: none;
-    width: 100%;
-    justify-content: space-evenly;
 }
 
-.swipe-btns-container .MuiIconButton-root{
-    background-color: white;
-    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important;
-}
+@media (min-width: 460px) {
+    .swipe-btns-container{
+        position: fixed;
+        bottom: 30vh;
+        display: flex;        
+        width: 100%;
+        justify-content: space-evenly;
+    }
+    
+    .swipe-btns-container .MuiIconButton-root{
+        background-color: transparent;
+        box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .swipe-btns-repeat{
+        padding: 3vw !important;
+    }
+    
+    .swipe-btns-left{
+        padding: 3vw !important;
+        color: #ec5e6f !important;
+    }
+    
+    .swipe-btns-star{
+        padding: 3vw !important;
+        color: #62b4f9 !important;
+    
+    }
 
-.swipe-btns-repeat{
-    padding: 3vw !important;
-}
-
-.swipe-btns-left{
-    padding: 3vw !important;
-    color: #ec5e6f !important;
-}
-
-.swipe-btns-star{
-    padding: 3vw !important;
-    color: #62b4f9 !important;
-
-}
-
-.swipe-btns-lightning{
-    padding: 3vw !important;
-    color: #915dd1 !important;
-}
-
-.swipe-btns-right{
-    padding: 3vw !important;
-    color: #76e2b3 !important;
+    .swipe-btns-like{
+        padding: 3vw !important;
+        color: #f52819 !important;
+    }
+    
+    .swipe-btns-lightning{
+        padding: 3vw !important;
+        color: #915dd1 !important;
+    }
+    
+    .swipe-btns-right{
+        padding: 3vw !important;
+        color: #76e2b3 !important;
+    }
 }

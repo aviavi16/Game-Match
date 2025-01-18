@@ -33,7 +33,6 @@ export function App() {
                     <Route path='/homepage' element={
                         <>
                             <HomePage />
-                            <SwipeButtons /> 
                             <Menu />
                         </>          
                     } />
