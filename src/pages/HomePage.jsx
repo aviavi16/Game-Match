@@ -8,6 +8,7 @@ import { utilService } from "../services/util.service"
 import { SwipeButtons } from "../cmps/SwipeButtons";
 import { useSelector } from "react-redux";
 import { showErrorMsg } from "../services/event-bus.service";
+import { setBrowse } from "../store/games/games.actions";
 
 export function HomePage(){
     const params = useParams()
@@ -41,10 +42,10 @@ export function HomePage(){
         const {  name, image } = boardGame
 
         if(direction === 'right'){
-            let messages = [{name, image, message: "Did you buy it?" }]
+            let messages = [{name, image, message: "Do you own this game?" }]
             console.log('this:', boardGame)
             boardGame["messages"]= messages
-            loggedinUser.likedGamesArray.push(boardGame)
+            setBrowse(boardGame)
             console.log('loggedinUser:', loggedinUser)
         } else{
             console.log('direction:', direction)

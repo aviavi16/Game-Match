@@ -8,6 +8,7 @@ export function ChatScreen(){
     const game = useParams()
     const [input, setInput] = useState('')
     const [gameData, setGameData] = useState(null)
+    const [messages, setMessages] = useState([])
 
     useEffect( () => {
         loadMessages()
@@ -20,6 +21,7 @@ export function ChatScreen(){
             }
         )
         setGameData(res)
+        setMessages(res.messages)
     }
 
     function handleSend(e){
@@ -28,13 +30,13 @@ export function ChatScreen(){
         setInput('')
     }
 
-    if (!gameData) return <p> loading game messages. </p>
+    if (!loggedinUser || !loggedinUser.likedGamesArray || !gameData || !gameData.messages) return <p> loading game messages. </p>
     return(
         <section className="chat-screen-container">
             <p className="chat-screen-time"> 
                 {`YOU MATCHED WITH ${ (gameData.name.toUpperCase())} ON 
                     ${new Date().toLocaleDateString()}`} </p>
-            {gameData.messages.map((item, index) =>(
+            {messages.map((item, index) =>(
                 item.name ? (
                 <div className="chat-screen-message" key={item.name + index}>
                     <Avatar 

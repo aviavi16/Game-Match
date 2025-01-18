@@ -7,6 +7,8 @@ export const bggService = {
     sendLog,
     getHardCodedGamesArray,
     getGamesArrayByTitle,
+    add,
+    getLikedGames
 }
 
 
@@ -33,6 +35,17 @@ async function getGamesArrayByTitle( gameTitle ) {
 
 async function sendLog() {
     httpService.get(`bgg/log`)
+}
+
+async function add( boardGame ){
+                console.log('boardGame:', boardGame)
+    
+    let savedBoardGameArr  = await httpService.put(`bgg/add`, boardGame)
+    return savedBoardGameArr
+}
+
+async function getLikedGames(){
+    return await httpService.get(`bgg/liked`)
 }
 
 function getHardCodedGamesArray(){

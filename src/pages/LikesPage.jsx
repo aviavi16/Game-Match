@@ -1,9 +1,22 @@
 import { useSelector } from "react-redux"
 import { Like } from "../cmps/Like"
+import { useEffect, useState } from "react"
+import { bggService } from "../services/bgg.service"
 
 export function LikesPage(){
+    const [ likedGamesArray, setLikedGamesArray] = useState([])
     let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
-    if (!loggedinUser || !loggedinUser.likedGamesArray[0]) return <p> No likes yet, Please discover new games. </p>
+
+    useEffect( () => {
+        loadLikes()
+    }, [])
+
+    async function loadLikes(){
+        const likedGames =  await bggService.getLikedGames()
+        setLikedGamesArray(await likedGames.likedGamesArray)
+    }
+
+    if (!likedGamesArray || !likedGamesArray[0]) return <p> No likes yet, Please discover new games. </p>
     return ( 
         <section className="likes-page">
             <div className="likes-header">
@@ -20,7 +33,7 @@ export function LikesPage(){
                 </div>
                
                 <div className="like-list-container">
-                {loggedinUser.likedGamesArray.map(boardGame =>{  
+                {likedGamesArray.map(boardGame =>{  
                     const { id, name, image} = boardGame
                     if ( name === null || image  === null)
                         return
