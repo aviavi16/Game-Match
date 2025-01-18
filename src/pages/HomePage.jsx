@@ -1,26 +1,24 @@
 import React, { useEffect, useRef, useState } from "react"
 import TinderCard from "react-tinder-card"
 import { bggService } from "../services/bgg.service"
-import { xmlUtilService } from "../services/xmlUtil.service"
 import SearchIcon from '../assets/svgs/search.svg?react';
-
-import { useSelector } from "react-redux"
 import Tooltip from '@mui/material/Tooltip';
-import { setBrowse } from "../store/games/games.actions"
 import { useNavigate, useParams } from "react-router-dom"
 import { utilService } from "../services/util.service"
 import { SwipeButtons } from "../cmps/SwipeButtons";
-import { UseFirstRenderEffect } from "../cmps/UseFirstRenderEffect";
+import { useSelector } from "react-redux";
+import { showErrorMsg } from "../services/event-bus.service";
 
 export function HomePage(){
     const params = useParams()
     const [searchTerm, setSearchTerm] = useState(utilService.getFilterFromSearchParams(params)); // Declare and initialize searchTerm
     const navigate = useNavigate()
 
-    let gamesArray = useSelector( storeState => storeState.bggHottestGames ) 
+    //let gamesArray = useSelector( storeState => storeState.bggHottestGames ) 
     const [boardGames, setBoardGames] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0); // Track the current card index
     const childRefs = useRef([]); // Array of refs for the TinderCards
+    let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
 
     useEffect(() => {
         loadData()
@@ -34,11 +32,26 @@ export function HomePage(){
             .map(() => React.createRef());
     }
 
-    function swiped (direction, nameToDelete){
-        console.log('recieving' + nameToDelete)
+    function swiped (direction, boardGame){
+        if(loggedinUser.username === 'guest'){
+            console.log('user not logged in, this is guest user, your choices would not be saved')
+            showErrorMsg('user not logged in, this is guest user, your choices would not be saved')
+        } 
+
+        const {  name, image } = boardGame
+
+        if(direction === 'right'){
+            let messages = [{name, image, message: "Did you buy it?" }]
+            console.log('this:', boardGame)
+            boardGame["messages"]= messages
+            loggedinUser.likedGamesArray.push(boardGame)
+            console.log('loggedinUser:', loggedinUser)
+        } else{
+            console.log('direction:', direction)
+        }
+        console.log('recieving' + name)
         setCurrentIndex((prevIndex) => {
             const nextIndex = prevIndex + 1;
-            console.log(`Updating currentIndex to: ${nextIndex}`);
             return nextIndex;
         });
     }
@@ -107,14 +120,13 @@ export function HomePage(){
                         return
 
                     const ref = childRefs.current[actualIndex]; // Use the original array index for refs
-                    console.log(`Rendering card for: ${name}, original index: ${actualIndex}, ref:`, ref);            
                     
                     return <TinderCard 
                         ref={ref} // Pass the ref here
                         className="swipe"
                         key={boardGame.name}
                         preventSwipe={['up', 'down']}
-                        onSwipe={dir => swiped(dir, boardGame.name)}
+                        onSwipe={dir => swiped(dir, boardGame)}
                         onCardLeftScreen={() => outOfFrame(boardGame.name)}>
                             <div className="card-container">
                                 <div className="image-container">

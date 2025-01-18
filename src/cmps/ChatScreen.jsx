@@ -1,20 +1,26 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Avatar } from '@material-ui/core'
 import { useParams } from "react-router-dom"
+import { useSelector } from "react-redux";
 
 export function ChatScreen(){
+    let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
     const game = useParams()
     const [input, setInput] = useState('')
-    const [messages, setMessages] = useState([
-        {
-            name: "Gaia",
-            image: "https://res.cloudinary.com/thekingdom/image/fetch/c_limit,f_jpg,h_555,q_auto,w_555/https://cf.geekdo-images.com/images/pic3528112.jpg",
-            message: "Did you buy it?"
-        },
-        {
-            message: "Yeah!"
-        }
-    ])
+    const [gameData, setGameData] = useState(null)
+
+    useEffect( () => {
+        loadMessages()
+    }, [])
+
+    function loadMessages(){
+        var res = loggedinUser.likedGamesArray.find(likedGame=>{
+            if(likedGame.id === game.boardgame )
+                return game
+            }
+        )
+        setGameData(res)
+    }
 
     function handleSend(e){
         e.preventDefault()
@@ -22,12 +28,13 @@ export function ChatScreen(){
         setInput('')
     }
 
+    if (!gameData) return <p> loading game messages. </p>
     return(
         <section className="chat-screen-container">
             <p className="chat-screen-time"> 
-                {`YOU MATCHED WITH ${ (game.boardgame.toUpperCase())} ON 
+                {`YOU MATCHED WITH ${ (gameData.name.toUpperCase())} ON 
                     ${new Date().toLocaleDateString()}`} </p>
-            {messages.map((item, index) =>(
+            {gameData.messages.map((item, index) =>(
                 item.name ? (
                 <div className="chat-screen-message" key={item.name + index}>
                     <Avatar 

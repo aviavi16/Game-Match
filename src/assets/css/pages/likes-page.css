@@ -9,10 +9,10 @@
     font-weight: 500;
 }
 
-.likes-container{
+.likes-page-container{
     background-color: rgb(247, 206, 212);
     display: grid;
-    height: 100vh;
+    height: 100%;
     grid-template-areas: 
         "title"
         "list"
@@ -44,4 +44,67 @@
 
 .like-list-container{
     grid-area: list;
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    height: auto;
+    gap:20px;
+}
+
+.like-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.like{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    height: auto;
+    width: auto;
+}
+
+.like-details{
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    p{
+        color: grey;
+    }
+    h2{
+        text-align: center;
+    }
+    
+}
+
+.like-image{
+    padding: 20px;
+}
+
+.like-timestamps{
+    display: flex;
+    justify-content: center;
+    color: lightgray;
+    border-bottom:  1px solid #fafafa;
+    width: 250px;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover{
+    text-decoration: none;
+    color: inherit;
+}
+
+.like-image{
+    width: 250px !important;
+    height: 250px !important;
+    border-radius: 0px !important;
 }

@@ -19,7 +19,6 @@ export function LoginPage() {
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
     const navigate = useNavigate()
 
-    //will be in the store in the future
     let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
     
     function onValidation () {

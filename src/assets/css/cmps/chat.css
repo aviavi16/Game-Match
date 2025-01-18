@@ -32,3 +32,8 @@ a:hover{
     color: inherit;
 }
 
+.chat-image{
+    width: 40px !important;
+    height: 40px !important;
+}
+
