@@ -242,9 +242,12 @@ export function LoginPage() {
 
                 {loggedinUser && 
                 <div className='welcome-user'>
-                    <h3> Hello {loggedinUser.username} </h3>
+                    <h2> Hello: {loggedinUser.username} </h2>
                     {console.log('loggedinUser:', loggedinUser)}
+                    <br/>
                     <button className="button-19" role="button" onClick={onLogout} type="button"> Log out </button>
+                    <br/>
+                    <button className="button-19" role="button" onClick={() => navigate('/homepage')} type="button"> Continue to Game Match! </button>
                 </div>
                 }
             </div>
