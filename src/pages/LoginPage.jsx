@@ -81,11 +81,10 @@ export function LoginPage() {
                 password,
             } )
             loginUser(loggedUser)
+            navigate('/homepage')
         } catch (err) {
             console.log('cannot login :', err.response ? err.response.data: err)
             showErrorMsg( 'Cannot login ')
-        } finally{
-            navigate('/homepage')
         }
 
     }
@@ -114,32 +113,28 @@ export function LoginPage() {
             } )
             loginUser(user)
             showSuccessMsg( `Welcome ${user?.username}`)
-
+            navigate('/homepage')
         } catch (err) {
             console.log('cannot signup :', err)
             showErrorMsg( 'Cannot signup ')
-        }finally{
-            navigate('/homepage')
         }
     } 
 
     async function onGuest () {
         try {
-        const user = { 
-            username: "guest",
-            bggUser: "guest",
-            password: "guest",
-            likedGamesArray: [],
-            superLikedGames: []
-        } 
-        loginUser(user)
-        showSuccessMsg( `Welcome ${user?.username}`)
-
+            const user = { 
+                username: "guest",
+                bggUser: "guest",
+                password: "guest",
+                likedGamesArray: [],
+                superLikedGames: []
+            } 
+            loginUser(user)
+            showSuccessMsg( `Welcome ${user?.username}`)
+            navigate('/homepage') 
         } catch (err) {
             console.log('cannot signup :', err)
             showErrorMsg( 'Cannot signup ')
-        }finally{
-            navigate('/homepage') 
         }
     }
         
