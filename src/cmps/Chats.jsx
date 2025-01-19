@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Chat } from "./Chat";
+import { bggService } from "../services/bgg.service";
 
 export function Chats(){
         const [ likedGamesArray, setLikedGamesArray] = useState([])
