@@ -8,9 +8,15 @@
 }
 
 .chat-details{
+    overflow-x: hidden;
     flex: 1;
     p{
         color: grey;
+    }
+    h2{
+        text-overflow: ellipsis; /* Handle overflow with ellipsis */
+        overflow: hidden;
+        white-space: nowrap; /* Prevent wrapping */
     }
 }
 
