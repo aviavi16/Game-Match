@@ -10,9 +10,8 @@
 }
 
 .likes-page-container{
-    background-color: rgb(247, 206, 212);
+    
     display: grid;
-    height: 100%;
     grid-template-areas: 
         "title"
         "list"
