@@ -9,6 +9,10 @@
     font-weight: 500;
 }
 
+likes-page{
+    height: 100vh;
+}
+
 .likes-page-container{
     background-color: rgb(247, 206, 212);
     display: grid;
