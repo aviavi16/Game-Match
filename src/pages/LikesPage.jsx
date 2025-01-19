@@ -1,11 +1,9 @@
-import { useSelector } from "react-redux"
 import { Like } from "../cmps/Like"
 import { useEffect, useState } from "react"
 import { bggService } from "../services/bgg.service"
 
 export function LikesPage(){
     const [ likedGamesArray, setLikedGamesArray] = useState([])
-    let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
 
     useEffect( () => {
         loadLikes()

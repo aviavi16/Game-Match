@@ -7,7 +7,6 @@ export function Like({ name, message, timestamp, profilePic}){
     }
     
     return (
-        <section >
             <div className="like-container" onClick={navigate(`/like/${name}`)}>
                 <div className="like-details">
                     <h2> {name} </h2>
@@ -19,6 +18,5 @@ export function Like({ name, message, timestamp, profilePic}){
                         <p className="like-timestamps"> {timestamp} </p>
                 </div>
             </div>
-        </section>
     )
 }

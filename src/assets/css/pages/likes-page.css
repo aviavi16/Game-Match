@@ -9,10 +9,6 @@
     font-weight: 500;
 }
 
-likes-page{
-    height: 100vh;
-}
-
 .likes-page-container{
     background-color: rgb(247, 206, 212);
     display: grid;
@@ -52,6 +48,7 @@ likes-page{
     grid-template-columns: 0.5fr 0.5fr;
     height: auto;
     gap:20px;
+    overflow-x: scroll;
 }
 
 .like-container{
@@ -76,6 +73,7 @@ likes-page{
     display: flex;
     justify-content: center;
     flex: 1;
+    flex-wrap: nowrap;
     p{
         color: grey;
     }
@@ -87,6 +85,10 @@ likes-page{
 
 .like-image{
     padding: 20px;
+    img{
+        height: 200px !important;
+        width: 200px !important;
+    }
 }
 
 .like-timestamps{
