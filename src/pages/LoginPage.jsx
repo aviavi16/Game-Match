@@ -20,7 +20,7 @@ export function LoginPage() {
     const navigate = useNavigate()
 
     let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
-    
+
     function onValidation () {
         // Set initial error values to empty
         setUsernameError('')

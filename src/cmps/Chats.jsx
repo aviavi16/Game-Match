@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Chat } from "./Chat";
-import { bggService } from "../services/bgg.service";
 
 export function Chats(){
-        const [ likedGamesArray, setLikedGamesArray] = useState([])
-    
-        useEffect( () => {
-            loadLikes()
-        }, [])
-    
-        async function loadLikes(){
-            const likedGames =  await bggService.getLikedGames()
-            setLikedGamesArray(await likedGames.likedGamesArray)
-        }
-    
-        if (!likedGamesArray || !likedGamesArray[0]) return <p> No likes yet, Please discover new games. </p>
+    let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
+
+    if (!loggedinUser.likedGamesArray[0]) return <p> No likes yet, Please discover new games. </p>
     return(
         <section className="chats-container">
-            {likedGamesArray.map(boardGame =>{  
+            {loggedinUser.likedGamesArray.map(boardGame =>{  
                 const { id, name, image} = boardGame
                 if ( name === null || image  === null)
                     return
