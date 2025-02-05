@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import { Chat } from "./Chat";
 
 export function Chats(){
-    let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
+    let userData = useSelector( storeState => storeState.userData ) 
 
-    if (!loggedinUser.likedGamesArray[0]) return <p> No likes yet, Please discover new games. </p>
+    if (!userData.likedGamesArray[0]) return <p> No likes yet, Please discover new games. </p>
     return(
         <section className="chats-container">
-            {loggedinUser.likedGamesArray.map(boardGame =>{  
+            {userData.likedGamesArray.map(boardGame =>{  
                 const { id, name, image} = boardGame
                 if ( name === null || image  === null)
                     return

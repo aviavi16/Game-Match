@@ -6,9 +6,9 @@ import Tooltip from '@mui/material/Tooltip';
 import { useNavigate, useParams } from "react-router-dom"
 import { utilService } from "../services/util.service"
 import { SwipeButtons } from "../cmps/SwipeButtons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showErrorMsg } from "../services/event-bus.service";
-import { setBrowse } from "../store/games/games.actions";
+import { addToLiked, initializeHottestGames, initializeUserData } from "../store/games/games.actions";
 
 export function HomePage(){
     const params = useParams()
@@ -19,22 +19,48 @@ export function HomePage(){
     const [boardGames, setBoardGames] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0); // Track the current card index
     const childRefs = useRef([]); // Array of refs for the TinderCards
-    let loggedinUser = useSelector( storeState => storeState.loggedinUser ) 
+    const userData = useSelector((state) => state.userData); // ✅ מקבל את ה-userData מה-Redux
+    const hottestGamesArray = useSelector((state) => state.bggHottestGames); // Get data from Redux
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        loadData()
+        if (hottestGamesArray.length === 0) {
+            loadData();
+        }
+    }, [hottestGamesArray])
+
+    useEffect(() => {
+        if (userData.length === 0) { // ✅ מוודא שהמידע לא נטען כבר
+            loadUserData();
+        }
+        console.log('userData:', userData)
     }, [])
 
+    async function loadUserData() {
+        try {
+            let userDataFromServer = await bggService.getUserData(); // API
+            dispatch(initializeUserData(userDataFromServer)); // ✅ Redux
+        } catch (err) {
+            console.error("Failed to load user data:", err);
+        }
+    }
+
     async function loadData(){
-        let hottestGamesArray_mini = await bggService.getHottestGames()
-        setBoardGames( hottestGamesArray_mini)
-         childRefs.current = Array(30)
-            .fill(0)
-            .map(() => React.createRef());
+        try {
+            let hottestGamesArray_mini = await bggService.getHottestGames();
+            setBoardGames( hottestGamesArray_mini)
+            childRefs.current = Array(30)
+               .fill(0)
+               .map(() => React.createRef());
+            dispatch(initializeHottestGames(hottestGamesArray_mini)); // ✅ Dispatch action
+        } catch (err) {
+            console.error("Failed to load hottest games:", err);
+        }
+       
     }
 
     function swiped (direction, boardGame){
-        if(loggedinUser.username === 'guest'){
+        if(userData.username === 'guest'){
             console.log('user not logged in, this is guest user, your choices would not be saved')
             showErrorMsg('user not logged in, this is guest user, your choices would not be saved')
         } 
@@ -45,8 +71,8 @@ export function HomePage(){
             let messages = [{name, image, message: "Do you own this game?" }]
             console.log('this:', boardGame)
             boardGame["messages"]= messages
-            setBrowse(boardGame)
-            console.log('loggedinUser:', loggedinUser)
+            addToLiked(boardGame)
+            console.log('userData:', userData)
         } else{
             console.log('direction:', direction)
         }
@@ -71,6 +97,7 @@ export function HomePage(){
 
                 cardRef.swipe(dir); // Programmatically swipe the current card
             } else {
+                console.log('boardGames.length' , boardGames.length, 'currentIndex:', currentIndex)
                 console.warn("No more cards to swipe!");
             }
         }
